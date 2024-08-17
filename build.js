@@ -3,7 +3,7 @@ import { minify } from "minify";
 
 const { copy } = ncp;
 
-async function minifyCode() {
+async function build() {
   const minifiedOut = await minify("./gamba.js");
   const bookmarkletOut = `javascript:(${encodeURIComponent(
     `function(){${minifiedOut}})()`,
@@ -13,4 +13,4 @@ async function minifyCode() {
   });
 }
 
-minifyCode();
+build();
