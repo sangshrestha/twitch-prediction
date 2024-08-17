@@ -1,5 +1,5 @@
-import { minify } from "minify";
 import ncp from "copy-paste";
+import { minify } from "minify";
 
 const { copy } = ncp;
 
@@ -13,4 +13,5 @@ async function minifyCode() {
     console.log("Copied to clipboard!");
   });
 }
+
 minifyCode();
