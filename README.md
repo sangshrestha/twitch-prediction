@@ -2,8 +2,8 @@
 Script to automate twitch predictions. Use as a bookmarklet.
 
 ## Setup
-1. Right click bookmark tab.
-2. Select Add page.
+1. Right click your bookmark tab.
+2. Select `Add page`.
 3. Name what you like.
 4. Copy code below and paste to URL.
 
@@ -13,6 +13,6 @@ javascript:(function()%7B(function()%7Bvar%20a%3D250000%2Cb%3D50%2Cc%3D0.2%2C%7B
 
 ## Usage
 1. Open prediction menu.
-2. Type in the blu input % chance of blu outcome happening. (eg. if the prediciton was for a coin toss and blu was betting for heads you would type `50`)
+2. Type in the blu input % chance of blu outcome happening. (eg. if the prediciton was for a coin toss and blu was betting for heads you would type '50'.)
 3. Do NOT click the twitch button. Do NOT press ENTER.
 4. Click the bookmark you created in Setup.
