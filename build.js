@@ -10,7 +10,6 @@ async function minifyCode() {
   )}`;
   copy(bookmarkletOut, () => {
     console.log(bookmarkletOut);
-    console.log("Copied to clipboard!");
   });
 }
 
