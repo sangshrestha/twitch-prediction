@@ -8,18 +8,18 @@
     timerEl,
     bluBtn,
     redBtn,
-    bluInput,
-    redInput,
+    bluInputEl,
+    redInputEl,
     bluPotEl,
     redPotEl,
   } = queryEls();
 
   const balance = balanceStrToInt(balanceEl.innerText);
-  const bluPercent = parseFloat(bluInput.value, 10);
+  const bluPercent = parseFloat(bluInputEl.value, 10);
   const bluEvenMultiplier = (100 - bluPercent) / bluPercent;
 
   console.info(`Starting gamba with blu win percent set to ${bluPercent}`);
-  bluInput.blur();
+  bluInputEl.blur();
   const gambaObserver = new MutationObserver(gamba);
   gambaObserver.observe(timerEl, {
     subtree: true,
@@ -46,7 +46,7 @@
     const [bluBtn, redBtn] = buttons;
 
     const inputs = rewardsDialog.querySelectorAll("input");
-    const [bluInput, redInput] = inputs;
+    const [bluInputEl, redInputEl] = inputs;
 
     const textEls = document.querySelectorAll(".hERoTc");
 
@@ -55,8 +55,8 @@
       timerEl,
       bluBtn,
       redBtn,
-      bluInput,
-      redInput,
+      bluInputEl,
+      redInputEl,
       bluPotEl: textEls[1],
       redPotEl: textEls[4],
     };
@@ -85,9 +85,9 @@
         redPotAmt,
       );
 
-      if (redInput.value !== `${redBetAdjusted}`) {
-        setInput(redInput, redBetAdjusted);
-        setInput(bluInput, "");
+      if (redInputEl.value !== `${redBetAdjusted}`) {
+        setInput(redInputEl, redBetAdjusted);
+        setInput(bluInputEl, "");
       }
       if (isTimeUp) {
         handleClick(redBtn, observer);
@@ -100,9 +100,9 @@
         bluPotAmt,
       );
 
-      if (bluInput.value !== `${bluBetAdjusted}`) {
-        setInput(bluInput, bluBetAdjusted);
-        setInput(redInput, "");
+      if (bluInputEl.value !== `${bluBetAdjusted}`) {
+        setInput(bluInputEl, bluBetAdjusted);
+        setInput(redInputEl, "");
       }
       if (isTimeUp) {
         handleClick(bluBtn, observer);
