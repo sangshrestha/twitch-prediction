@@ -78,10 +78,12 @@
     const redEvenBet = Math.floor(bluPotAmt * bluEvenMultiplier - redPotAmt);
 
     if (redEvenBet > 0) {
-      const redBetAdjusted =
-        redPotAmt === 0
-          ? 1
-          : adjustBet(redEvenBet, redOdds, 100 - bluPercent, redPotAmt);
+      const redBetAdjusted = adjustBet(
+        redEvenBet,
+        redOdds,
+        100 - bluPercent,
+        redPotAmt,
+      );
 
       if (redInput.value !== `${redBetAdjusted}`) {
         setInput(redInput, redBetAdjusted);
@@ -91,10 +93,12 @@
         handleClick(redBtn, observer);
       }
     } else if (bluEvenBet > 0) {
-      const bluBetAdjusted =
-        bluPotAmt === 0
-          ? 1
-          : adjustBet(bluEvenBet, bluOdds, bluPercent, bluPotAmt);
+      const bluBetAdjusted = adjustBet(
+        bluEvenBet,
+        bluOdds,
+        bluPercent,
+        bluPotAmt,
+      );
 
       if (bluInput.value !== `${bluBetAdjusted}`) {
         setInput(bluInput, bluBetAdjusted);
@@ -131,6 +135,10 @@
   }
 
   function adjustBet(evenBet, odds, percent, pot) {
+    if (pot === 0) {
+      return 1;
+    }
+
     const winProbability = percent / 100;
     const kellyMultiplier =
       (odds * winProbability - (1 - winProbability)) / odds;
