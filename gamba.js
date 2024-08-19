@@ -88,7 +88,6 @@
     let evenBet = 0;
     let betOpt;
 
-    // Bet required to break even based on the given odds
     const bluEvenBet = calcEvenBet(bluOpt);
     if (bluEvenBet > 0) {
       evenBet = bluEvenBet;
@@ -115,6 +114,7 @@
     }
   }
 
+  // Small helpers
   function getAltOpt(opt) {
     if (opt === redOpt) {
       return bluOpt;
@@ -128,6 +128,7 @@
   }
 
   function calcEvenBet(opt) {
+    // Bet required to break even based on the given win percent
     const alt = getAltOpt(opt);
     const multiplier = opt.winP / alt.winP;
 
