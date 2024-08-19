@@ -82,32 +82,33 @@
     const [minute, sec] = mutations[0].target.data.split(":");
     const isTimeUp = parseInt(minute, 10) === 0 && parseInt(sec, 10) < 2;
 
+    // Technically you can get the current value from the element but fixing it here for consistent arithmetic throughout
     bluOpt.potAmt = balanceStrToInt(bluOpt.potEl.innerText);
     redOpt.potAmt = balanceStrToInt(redOpt.potEl.innerText);
 
-    let evenBet = 0;
+    let betAmt = 0;
     let betOpt;
 
-    const bluEvenBet = calcEvenBet(bluOpt);
-    if (bluEvenBet > 0) {
-      evenBet = bluEvenBet;
+    const bluBet = calcModifiedBet(bluOpt);
+    if (bluBet > 0) {
+      betAmt = bluBet;
       betOpt = bluOpt;
     } else {
-      const redEvenBet = calcEvenBet(redOpt);
-      if (redEvenBet > 0) {
-        evenBet = redEvenBet;
+      const redBet = calcModifiedBet(redOpt);
+      if (redBet > 0) {
+        betAmt = redBet;
         betOpt = redOpt;
       }
     }
 
-    if (evenBet > 0) {
+    if (betAmt > 0) {
       const altOpt = getAltOpt(betOpt);
-      const betAdjusted = adjustBet(evenBet, betOpt);
 
-      if (betOpt.inputEl.value !== `${betAdjusted}`) {
-        setInput(betOpt.inputEl, betAdjusted);
+      if (betOpt.inputEl.value !== `${betAmt}`) {
+        setInput(betOpt.inputEl, betAmt);
         setInput(altOpt.inputEl, "");
       }
+
       if (isTimeUp) {
         handleClick(betOpt.btn, observer);
       }
@@ -135,7 +136,13 @@
     return Math.floor(alt.potAmt * multiplier - opt.potAmt);
   }
 
-  function adjustBet(evenBet, betOpt) {
+  function calcModifiedBet(betOpt) {
+    const evenBet = calcEvenBet(betOpt);
+
+    if (evenBet <= 0) {
+      return 0;
+    }
+
     const { potAmt, winP } = betOpt;
 
     if (potAmt === 0) {
@@ -162,6 +169,7 @@
     );
   }
 
+  // eg '10.5K' => 10500
   function balanceStrToInt(str) {
     if (str.includes("M")) {
       return parseFloat(str) * 1000000;
@@ -170,6 +178,7 @@
     } else return parseFloat(str);
   }
 
+  // so React will internally update the value
   function setInput(inputEl, value) {
     const nativeSetter = Object.getOwnPropertyDescriptor(
       window.HTMLInputElement.prototype,
