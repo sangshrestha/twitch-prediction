@@ -143,13 +143,15 @@
     const kellyMultiplier =
       (odds * winProbability - (1 - winProbability)) / odds;
 
+    // pot multiplier depends on how greedy you want to be on small pots
+    // evenBet * 0.5 to minimise making the odds worse for ourselves
     return Math.round(
       Math.min(
         MAX_BET,
         pot * 10,
         evenBet * 0.5,
         Math.max(
-          balance * Math.min(kellyMultiplier, BANKROLL_CAP),
+          balance * BANKROLL_CAP * kellyMultiplier,
           Math.min(balance, MIN_BET),
         ),
       ),
