@@ -15,10 +15,25 @@
   } = queryEls();
 
   const balance = balanceStrToInt(balanceEl.innerText);
-  const bluPercent = parseFloat(bluInputEl.value, 10);
-  const bluEvenMultiplier = (100 - bluPercent) / bluPercent;
+  const bluWinPercent = parseFloat(bluInputEl.value, 10);
 
-  console.info(`Starting gamba with blu win percent set to ${bluPercent}`);
+  const redOpt = {
+    btn: redBtn,
+    inputEl: redInputEl,
+    potEl: redPotEl,
+    winP: 100 - bluWinPercent,
+    potAmt: 0,
+  };
+
+  const bluOpt = {
+    btn: bluBtn,
+    inputEl: bluInputEl,
+    potEl: bluPotEl,
+    winP: bluWinPercent,
+    potAmt: 0,
+  };
+
+  console.info(`Starting gamba with blu win percent set to ${bluWinPercent}`);
   bluInputEl.blur();
   const gambaObserver = new MutationObserver(gamba);
   gambaObserver.observe(timerEl, {
@@ -67,47 +82,83 @@
     const [minute, sec] = mutations[0].target.data.split(":");
     const isTimeUp = parseInt(minute, 10) === 0 && parseInt(sec, 10) < 2;
 
-    const bluPotAmt = balanceStrToInt(bluPotEl.innerText);
-    const redPotAmt = balanceStrToInt(redPotEl.innerText);
+    bluOpt.potAmt = balanceStrToInt(bluOpt.potEl.innerText);
+    redOpt.potAmt = balanceStrToInt(redOpt.potEl.innerText);
 
-    const bluOdds = (bluPotAmt + redPotAmt) / bluPotAmt;
-    const redOdds = (bluPotAmt + redPotAmt) / redPotAmt;
+    let evenBet = 0;
+    let betOpt;
 
     // Bet required to break even based on the given odds
-    const bluEvenBet = Math.floor(redPotAmt / bluEvenMultiplier - bluPotAmt);
-    const redEvenBet = Math.floor(bluPotAmt * bluEvenMultiplier - redPotAmt);
-
-    if (redEvenBet > 0) {
-      const redBetAdjusted = adjustBet(
-        redEvenBet,
-        redOdds,
-        100 - bluPercent,
-        redPotAmt,
-      );
-
-      if (redInputEl.value !== `${redBetAdjusted}`) {
-        setInput(redInputEl, redBetAdjusted);
-        setInput(bluInputEl, "");
-      }
-      if (isTimeUp) {
-        handleClick(redBtn, observer);
-      }
-    } else if (bluEvenBet > 0) {
-      const bluBetAdjusted = adjustBet(
-        bluEvenBet,
-        bluOdds,
-        bluPercent,
-        bluPotAmt,
-      );
-
-      if (bluInputEl.value !== `${bluBetAdjusted}`) {
-        setInput(bluInputEl, bluBetAdjusted);
-        setInput(redInputEl, "");
-      }
-      if (isTimeUp) {
-        handleClick(bluBtn, observer);
+    const bluEvenBet = calcEvenBet(bluOpt);
+    if (bluEvenBet > 0) {
+      evenBet = bluEvenBet;
+      betOpt = bluOpt;
+    } else {
+      const redEvenBet = calcEvenBet(redOpt);
+      if (redEvenBet > 0) {
+        evenBet = redEvenBet;
+        betOpt = redOpt;
       }
     }
+
+    if (evenBet > 0) {
+      const altOpt = getAltOpt(betOpt);
+      const betAdjusted = adjustBet(evenBet, betOpt);
+
+      if (betOpt.inputEl.value !== `${betAdjusted}`) {
+        setInput(betOpt.inputEl, betAdjusted);
+        setInput(altOpt.inputEl, "");
+      }
+      if (isTimeUp) {
+        handleClick(betOpt.btn, observer);
+      }
+    }
+  }
+
+  function getAltOpt(opt) {
+    if (opt === redOpt) {
+      return bluOpt;
+    } else if (opt === bluOpt) {
+      return redOpt;
+    }
+  }
+
+  function calcOdds(opt) {
+    return (opt.potAmt + getAltOpt(opt).potAmt) / opt.potAmt;
+  }
+
+  function calcEvenBet(opt) {
+    const alt = getAltOpt(opt);
+    const multiplier = opt.winP / alt.winP;
+
+    return Math.floor(alt.potAmt * multiplier - opt.potAmt);
+  }
+
+  function adjustBet(evenBet, betOpt) {
+    const { potAmt, winP } = betOpt;
+
+    if (potAmt === 0) {
+      return 1;
+    }
+
+    const odds = calcOdds(betOpt);
+    const winProbability = winP / 100;
+    const kellyMultiplier =
+      (odds * winProbability - (1 - winProbability)) / odds;
+
+    // pot multiplier depends on how greedy you want to be on small pots
+    // evenBet * 0.5 to minimise making the odds worse for ourselves
+    return Math.round(
+      Math.min(
+        MAX_BET,
+        potAmt * 10,
+        evenBet * 0.5,
+        Math.max(
+          balance * BANKROLL_CAP * kellyMultiplier,
+          Math.min(balance, MIN_BET),
+        ),
+      ),
+    );
   }
 
   function balanceStrToInt(str) {
@@ -132,29 +183,5 @@
   function handleClick(btn, obs) {
     btn.click();
     obs.disconnect();
-  }
-
-  function adjustBet(evenBet, odds, percent, pot) {
-    if (pot === 0) {
-      return 1;
-    }
-
-    const winProbability = percent / 100;
-    const kellyMultiplier =
-      (odds * winProbability - (1 - winProbability)) / odds;
-
-    // pot multiplier depends on how greedy you want to be on small pots
-    // evenBet * 0.5 to minimise making the odds worse for ourselves
-    return Math.round(
-      Math.min(
-        MAX_BET,
-        pot * 10,
-        evenBet * 0.5,
-        Math.max(
-          balance * BANKROLL_CAP * kellyMultiplier,
-          Math.min(balance, MIN_BET),
-        ),
-      ),
-    );
   }
 })();
