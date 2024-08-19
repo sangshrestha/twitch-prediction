@@ -63,7 +63,7 @@
     const inputs = rewardsDialog.querySelectorAll("input");
     const [bluInputEl, redInputEl] = inputs;
 
-    const textEls = document.querySelectorAll(".hERoTc");
+    const textEls = rewardsDialog.querySelectorAll(".hERoTc");
 
     return {
       balanceEl,
@@ -72,8 +72,8 @@
       redBtn,
       bluInputEl,
       redInputEl,
-      bluPotEl: textEls[1],
-      redPotEl: textEls[4],
+      bluPotEl: textEls[0],
+      redPotEl: textEls[3],
     };
   }
 
