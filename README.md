@@ -1,7 +1,7 @@
 # twitch-prediction
 Script to automate twitch prediction. Use as a bookmarklet.
 
-> This does NOT work for prediciton with more than two outcomes!
+> This does NOT work for prediction with more than two outcomes.
 
 ## Setup
 1. Create a bookmark with the following code as `URL`.
