@@ -82,7 +82,8 @@
     const [minute, sec] = mutations[0].target.data.split(":");
     const isTimeUp = parseInt(minute, 10) === 0 && parseInt(sec, 10) < 2;
 
-    // Technically you can get the current value from the element but fixing it here for consistent arithmetic throughout
+    // Technically you can get the most current value from the element at any point later
+    // but fixing it here for consistent arithmetic throughout
     bluOpt.potAmt = balanceStrToInt(bluOpt.potEl.innerText);
     redOpt.potAmt = balanceStrToInt(redOpt.potEl.innerText);
 
