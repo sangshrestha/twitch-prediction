@@ -1,5 +1,5 @@
 # twitch-prediction
-Script to automate twitch prediction. Use as a bookmarklet.
+Script to automate twitch prediction. Use as a bookmark.
 
 > This does NOT work for prediction with more than two outcomes.
 
