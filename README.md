@@ -1,5 +1,5 @@
 # twitch-prediction
-Script to automate twitch prediction. Use as a bookmark.
+Script to automate twitch prediction vote. Use as a bookmark.
 
 > This does NOT work for prediction with more than two outcomes.
 
@@ -11,6 +11,8 @@ javascript:(function()%7B(function()%7Bvar%20a%3D250000%2Cb%3D50%2Cc%3D0.2%2C%7B
 ```
 
 > Above code is minified `gamba.js` then converted to bookmarklet format. Check `build.js`.
+
+![Create bookmark](assets/create-bookmark.gif)
 
 ## Usage
 1. Open prediction menu.
