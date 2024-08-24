@@ -14,9 +14,12 @@ javascript:(function()%7B(function()%7Bvar%20a%3D250000%2Cb%3D50%2Cc%3D0.2%2C%7B
 
 ![Create bookmark](assets/create-bookmark.gif)
 
-## Usage
-1. Open prediction menu.
-2. Type in the blue input box the % chance of the blue outcome happening. (eg. if the prediciton was for a coin toss and blue was betting for heads outcome you would type '50'.)
-3. Do NOT click the Vote button. Do NOT press ENTER.
-4. Click the bookmark you created in [Setup](#Setup).
-5. IMPORTANT: Keep the prediction menu open until the timer runs out. Clicking outside the menu will close the menu and you will have to redo the previous steps.
+## How to use
+1. Wait for prediction to begin!
+2. Open up the prediction menu. Then click on `Predict with Custom Amount` to enable the custom input boxes.
+3. Type in the BLUE input box the % chance of the blue outcome happening. (eg. if the prediciton was for a coin toss and blue was betting for heads outcome you would type `50`.)
+4. Do NOT click the Vote button. Do NOT press ENTER.
+5. Click the bookmark you created in [Setup](#Setup).
+6. Keep the prediction menu open until the timer runs out (or if you want to cast the vote early you can do so with the correct bet at that time). Clicking outside the menu will close the menu and you will have to redo the previous steps. You can leave the tab in the background or the browser minimised however.
+
+![Start gamba](assets/gamba.gif)
