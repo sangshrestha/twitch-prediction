@@ -1,7 +1,7 @@
 (function () {
   const MAX_BET = 250000;
   const MIN_BET = 50;
-  const BANKROLL_CAP = 0.2;
+  const BANKROLL_CAP = 0.15;
 
   const {
     balanceEl,
@@ -15,7 +15,14 @@
   } = queryEls();
 
   const balance = balanceStrToInt(balanceEl.innerText);
-  const bluWinPercent = parseFloat(bluInputEl.value, 10);
+  const bluWinPercent =
+    bluInputEl.value.length > 0
+      ? parseFloat(bluInputEl.value, 10)
+      : parseFloat(sessionStorage.getItem("gamba"), 10);
+
+  if (bluInputEl.value.length > 0) {
+    sessionStorage.setItem("gamba", bluInputEl.value);
+  }
 
   const redOpt = {
     btn: redBtn,
