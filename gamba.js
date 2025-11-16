@@ -50,15 +50,15 @@
 
   function queryEls() {
     const rewardsDialog = document.querySelector(
-      "#channel-points-reward-center-body",
+      "#channel-points-reward-center-body"
     );
 
     const predictionHeader = rewardsDialog.querySelector(
-      ".prediction-checkout-details-header",
+      ".prediction-checkout-details-header"
     );
 
     const balanceEl = document.querySelector(
-      "[data-test-selector='copo-balance-string']",
+      "[data-test-selector='copo-balance-string']"
     );
 
     // First `p` is the prediction title
@@ -70,7 +70,7 @@
     const inputs = rewardsDialog.querySelectorAll("input");
     const [bluInputEl, redInputEl] = inputs;
 
-    const textEls = rewardsDialog.querySelectorAll(".hERoTc");
+    const textEls = rewardsDialog.querySelectorAll(".jAIlLI");
 
     return {
       balanceEl,
@@ -171,9 +171,9 @@
         evenBet * 0.5,
         Math.max(
           balance * BANKROLL_CAP * kellyMultiplier,
-          Math.min(balance, MIN_BET),
-        ),
-      ),
+          Math.min(balance, MIN_BET)
+        )
+      )
     );
   }
 
@@ -190,7 +190,7 @@
   function setInput(inputEl, value) {
     const nativeSetter = Object.getOwnPropertyDescriptor(
       window.HTMLInputElement.prototype,
-      "value",
+      "value"
     ).set;
     const evt = new Event("input", { bubbles: true });
 
