@@ -49,11 +49,11 @@
   });
 
   function queryEls() {
-    const rewardsDialog = document.querySelector(
-      "#channel-points-reward-center-body"
-    );
+    const rewardCenter = document.querySelector(".reward-center__content");
+    const buttonContainers = document.querySelectorAll(".custom-prediction-button");
+    const [bluContainer, redContainer] = buttonContainers;
 
-    const predictionHeader = rewardsDialog.querySelector(
+    const predictionHeader = document.querySelector(
       ".prediction-checkout-details-header"
     );
 
@@ -64,13 +64,13 @@
     // First `p` is the prediction title
     const timerEl = predictionHeader.querySelectorAll("p")[1];
 
-    const buttons = rewardsDialog.querySelectorAll("button");
-    const [bluBtn, redBtn] = buttons;
+    const bluBtn = bluContainer.querySelector("button");
+    const redBtn = redContainer.querySelector("button");
 
-    const inputs = rewardsDialog.querySelectorAll("input");
-    const [bluInputEl, redInputEl] = inputs;
+    const bluInputEl = bluContainer.querySelector("input");
+    const redInputEl = redContainer.querySelector("input");
 
-    const textEls = rewardsDialog.querySelectorAll(".jAIlLI");
+    const textEls = rewardCenter.querySelectorAll(".jAIlLI");
 
     return {
       balanceEl,
